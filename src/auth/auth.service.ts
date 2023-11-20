@@ -56,26 +56,22 @@ export class AuthService {
         if (!checkPassword) {
             throw new HttpException('Credential Incorrect', HttpStatus.UNAUTHORIZED);
         }
-        return await this.generateJwt(user.id, user.email, user, JwtConfig.user_secret, JwtConfig.user_expired);
+        return await this.generateJwt(user);
     }
 
     /**
      * Generate JWT
-     * @param userId 
-     * @param email 
      * @param user 
-     * @param secret 
-     * @param expired 
      * @returns 
      */
-    async generateJwt(userId: any, email: string, user: any, secret: any, expired = JwtConfig.user_expired) {
+    async generateJwt(user: any) {
         let accessToken = await this.jwtService.sign({
-            sub: userId,
-            email,
-            name: user.first_name + ' ' + user.last_name
+            sub: user.id,
+            email: user.email,
+            name: user.name
         }, {
-            expiresIn: expired,
-            secret
+            expiresIn: JwtConfig.user_expired,
+            secret: JwtConfig.user_secret
         });
         return {
             statusCode: 200,
