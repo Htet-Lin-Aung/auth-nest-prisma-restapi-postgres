@@ -6,13 +6,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Open API Test Dansmultipro')
-    .setDescription('API Test Dansmultipro')
+    .setTitle('API Testing')
+    // .setDescription('API Test Dansmultipro')
     .setVersion('1.0')
-    .addTag('dansmultipro')
+    // .addTag('dansmultipro')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('openapi', app, document);
+  SwaggerModule.setup('api', app, document);
 
   const cors = {
     origin: [

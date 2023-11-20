@@ -10,16 +10,4 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
   providers: [AppService],
 })
 
-export class AppModule {
-  // This method initializes Swagger documentation for your entire application
-  static setupSwagger(app) {
-    const config = new DocumentBuilder()
-      .setTitle('Your API')
-      .setDescription('API description')
-      .setVersion('1.0')
-      .build();
-
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
-  }
-}
+export class AppModule {}
