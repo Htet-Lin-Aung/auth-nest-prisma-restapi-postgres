@@ -36,6 +36,7 @@ export class AuthController {
      * @param dto 
      * @returns 
      */
+    @UsePipes(ValidationPipe)
     @HttpCode(200)
     @Post('login')
     async login(@Body() dto: LoginDto) {
