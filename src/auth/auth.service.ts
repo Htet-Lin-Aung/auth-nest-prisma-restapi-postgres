@@ -17,7 +17,7 @@ export class AuthService {
      * @param dto 
      * @returns 
      */
-    async register(dto: RegisterDto) {
+    async register(dto: RegisterDto, profile: Express.Multer.File) {
         const user = await this.dbService.user.findFirst({
             where: {
                 phone: dto.phone
@@ -26,8 +26,11 @@ export class AuthService {
         if (user) {
             throw new HttpException('User Exists', HttpStatus.BAD_REQUEST);
         }
+
+        const filePath = '/uploads/' + profile.filename;
+
         const createUser = await this.dbService.user.create({
-            data: dto
+            data: {...dto, profile: filePath}
         })
         if (createUser) {
             return {

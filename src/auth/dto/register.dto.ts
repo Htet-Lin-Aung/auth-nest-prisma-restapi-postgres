@@ -1,5 +1,3 @@
-// src/auth/dto/signup.dto.ts
-
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsPhoneNumber, IsString, Matches, MaxLength, MinLength, Equals } from 'class-validator';
 
@@ -20,4 +18,7 @@ export class RegisterDto {
   @IsNotEmpty()
   @ApiProperty()
   password: string;
+
+  @ApiProperty({ type: 'string', format: 'binary' })
+  profile: Express.Multer.File;
 }
