@@ -27,10 +27,8 @@ export class AuthService {
             throw new HttpException('User Exists', HttpStatus.BAD_REQUEST);
         }
 
-        const filePath = '/uploads/' + profile.filename;
-
         const createUser = await this.dbService.user.create({
-            data: {...dto, profile: filePath}
+            data: {...dto, profile: profile.path}
         })
         if (createUser) {
             return {
@@ -103,11 +101,16 @@ export class AuthService {
         },
         );
 
+        const fullProfilePath = `${process.env.DOMAIN}/auth/${user.profile}`;
+
         return {
             statusCode: HttpStatus.OK,
             accessToken: accessToken,
             refreshToken: refreshToken,
-            user: omit(user, ['password','created_at','updated_at'])
+            user: {
+                ...omit(user, ['password', 'created_at', 'updated_at']),
+                profile: fullProfilePath,
+            },
         };
     }
 }
